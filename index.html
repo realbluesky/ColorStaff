@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, user-scalable=no">
+	<title>Color Staff</title>
+	<style type="text/css">
+	@font-face {
+	  font-family: 'Animals';
+	  font-style: normal;
+	  font-weight: 400;
+	  src: local('Animals'), url(http://realbluesky.github.io/ColorStaff/animals.woff) format('woff');
+	}
+	@font-face {
+	  font-family: 'FreeSerif';
+	  font-style: normal;
+	  font-weight: 400;
+	  src: local('FreeSerif'), url(http://realbluesky.github.io/ColorStaff/freeserif.woff) format('woff');
+	}
+
+
+	html { height: 100%; }
+	body { 
+		background-color: #eee;
+		height: 100%;
+		font-size: 10px;
+		font-family: FreeSerif;
+		color: white;
+		text-shadow: 0px 0px 6px black;
+		margin:0;
+	}
+
+	#controls {
+		background-color: #333;
+		height:6%;
+		float:left;
+		width:100%;
+	}
+
+	#display {
+		height:90%;
+		float: left;
+		width:100%;
+	}
+
+	.brace { 
+		position: relative;
+		float: left;
+		top:3%;
+		left:0;
+		font-size: 6000%;
+		z-index: -1;
+		transform-origin: left 25%;
+		-webkit-transform-origin: left 25%;
+		-moz-transform-origin: left 25%;
+		-ms-transform-origin: left 25%;
+		-o-transform-origin: left 25%;
+		transform:scaleY(1.66); /* W3C */
+	    -webkit-transform:scaleY(1.66); /* Safari and Chrome */
+	    -moz-transform:scaleY(1.66); /* Firefox */
+	    -ms-transform:scaleY(1.66); /* IE 9 */
+	    -o-transform:scaleY(1.66); /* Opera */
+	}
+	.brace:after { content: '\1D114'; }
+	.clef {
+		font-size: 4000%;
+		position: absolute;
+		z-index: 10;
+	}
+
+	.staff {
+		height: 50%; 
+		width:90%;
+		margin-left: 10%;
+		position: relative; 
+	}
+
+	div[class^='line-'], div[class*=' line-'] {
+		background-color: black;
+		height: 1.67%;
+		width: 100%;
+		-webkit-box-shadow: 0px 3px 3px rgba(0,0,0,.5);
+		position: relative;
+		z-index: 5;
+	}
+
+	div[class^='space-'], div[class*=' space-'] {
+		height: 15%;
+		width: 100%;
+		position: relative;
+		z-index: 0;
+	}
+
+	div.line-0, div.space-0, div.space-5 { width: 25%; left: 280px;}
+	.treble div.line-0, .treble div.space-0, .treble div.space-5 { width: 25%; left: 680px;}
+
+	.staff .name { font-size:750%; position:relative; visibility: hidden; }
+	.staff .animal { font-family: Animals; font-size: 600%; position:relative; visibility: hidden;}
+	.names .staff .name, .animals .staff .animal { visibility: visible; }
+
+	div[class^='line-'] span, div[class*=' line-'] span { top: -520%; left: 300px; }
+	div[class^='space-'] span, div[class*=' space-'] span { top: -15%; left: 500px; }
+	div.line-0 span { left: 20px; }
+	div.space-0 span, div.space-5 span { left: 220px;}
+
+	.treble div[class^='line-'] span, .treble div[class*=' line-'] span { left: 700px; }
+	.treble div[class^='space-'] span, .treble div[class*=' space-'] span { left: 900px; }
+	.treble div.line-0 span { left: 20px; }
+	.treble div.space-0 span, .treble div.space-5 span { left: 220px;}
+
+	.bass .clef { top: 3%; }
+	.bass .clef:after { content: '\1D122'; }
+	.treble .clef { top: 0; }
+	.treble .clef:after { content: '\1D11E'; }
+
+	.backgrounds .bass .space-2, .backgrounds .treble .line-0, .backgrounds .treble .space-3 { background-color: orange; /* orange Cat */ }
+	.backgrounds .bass .line-3, .backgrounds .treble .space-0, .backgrounds .treble .line-4 { background-color: brown; /* brown Dog */ }
+	.backgrounds .bass .line-0, .backgrounds .bass .space-3, .backgrounds .treble .line-1, .backgrounds .treble .space-4 { background-color: gray; /* gray Elephant */ }
+	.backgrounds .bass .space-0, .backgrounds .bass .line-4, .backgrounds .treble .space-1, .backgrounds .treble .line-5 { background-color: pink; /* pink Flamingo */ }
+	.backgrounds .bass .line-1, .backgrounds .bass .space-4, .backgrounds .treble .line-2, .backgrounds .treble .space-5 { background-color: yellow; /* yellow Giraffe */ } 
+	.backgrounds .bass .space-1, .backgrounds .bass .line-5, .backgrounds .treble .space-2 { background-color: green; /* green Alligator */ }
+	.backgrounds .bass .line-2, .backgrounds .bass .space-5, .backgrounds .treble .line-3 { background-color: blue; /* blue Bird */ }
+
+	.colors .bass .space-2 span, .colors .treble .line-0 span, .colors .treble .space-3 span { color: orange; }
+	.colors .bass .line-3 span, .colors .treble .space-0 span, .colors .treble .line-4 span { color: brown; }
+	.colors .bass .line-0 span, .colors .bass .space-3 span, .colors .treble .line-1 span, .colors .treble .space-4 span { color: gray; }
+	.colors .bass .space-0 span, .colors .bass .line-4 span, .colors .treble .space-1 span, .colors .treble .line-5 span { color: pink; }
+	.colors .bass .line-1 span, .colors .bass .space-4 span, .colors .treble .line-2 span, .colors .treble .space-5 span { color: yellow; }
+	.colors .bass .space-1 span, .colors .bass .line-5 span, .colors .treble .space-2 span { color: green; }
+	.colors .bass .line-2 span, .colors .bass .space-5 span, .colors .treble .line-3 span { color: blue;}
+
+
+	.bass .space-2 .name:after, .treble .line-0 .name:after, .treble .space-3 .name:after { content: 'C'; }
+	.bass .line-3 .name:after, .treble .space-0 .name:after, .treble .line-4 .name:after { content: 'D'; }
+	.bass .line-0 .name:after, .bass .space-3 .name:after, .treble .line-1 .name:after, .treble .space-4 .name:after { content: 'E'; }
+	.bass .space-0 .name:after, .bass .line-4 .name:after, .treble .space-1 .name:after, .treble .line-5 .name:after { content: 'F'; }
+	.bass .line-1 .name:after, .bass .space-4 .name:after, .treble .line-2 .name:after, .treble .space-5 .name:after { content: 'G'; }
+	.bass .space-1 .name:after, .bass .line-5 .name:after, .treble .space-2 .name:after { content: 'A'; }
+	.bass .line-2 .name:after, .bass .space-5 .name:after, .treble .line-3 .name:after { content: 'B';}
+
+	.bass .space-2 .animal:after, .treble .line-0 .animal:after, .treble .space-3 .animal:after { content: 'C'; }
+	.bass .line-3 .animal:after, .treble .space-0 .animal:after, .treble .line-4 .animal:after { content: 'D'; }
+	.bass .line-0 .animal:after, .bass .space-3 .animal:after, .treble .line-1 .animal:after, .treble .space-4 .animal:after { content: 'E'; }
+	.bass .space-0 .animal:after, .bass .line-4 .animal:after, .treble .space-1 .animal:after, .treble .line-5 .animal:after { content: 'g'; }
+	.bass .line-1 .animal:after, .bass .space-4 .animal:after, .treble .line-2 .animal:after, .treble .space-5 .animal:after { content: 'I'; }
+	.bass .space-1 .animal:after, .bass .line-5 .animal:after, .treble .space-2 .animal:after { content: 'A'; }
+	.bass .line-2 .animal:after, .bass .space-5 .animal:after, .treble .line-3 .animal:after { content: 'B';}
+
+	#controls h1 { font-size:300%; color: gray; margin:.4% 1%; float: left; display: block; }
+	#controls a {
+		font-weight: bold;
+		color: gray;
+		font-size: 300%;
+		text-decoration: none;
+		cursor: pointer;
+		margin: .4% 2%;
+		display: block;
+		float: left;
+		-webkit-touch-callout: none;
+		-webkit-user-select: none;
+		-khtml-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
+
+	#controls a.active { color: white;}
+
+
+	</style>
+</head>
+<body>
+	<div id="controls">
+		<h1>Controls:</h1>
+		<a class="names active">Names</a>
+		<a class="animals active">Animals</a>
+		<a class="colors active">Colors</a>
+		<a class="backgrounds">Backgrounds</a>
+	</div>
+	<div id="display" class="colors names animals">
+		<div class="brace"></div>
+		<div class="treble staff">
+			<div class="clef"></div>
+			<div class="space-5"><span class="name"></span> <span class="animal"></span></div>
+			<div class="line-5"><span class="name"></span> <span class="animal"></span></div>
+			<div class="space-4"><span class="name"></span> <span class="animal"></span></div>
+			<div class="line-4"><span class="name"></span> <span class="animal"></span></div>
+			<div class="space-3"><span class="name"></span> <span class="animal"></span></div>
+			<div class="line-3"><span class="name"></span> <span class="animal"></span></div>
+			<div class="space-2"><span class="name"></span> <span class="animal"></span></div>
+			<div class="line-2"><span class="name"></span> <span class="animal"></span></div>
+			<div class="space-1"><span class="name"></span> <span class="animal"></span></div>
+			<div class="line-1"><span class="name"></span> <span class="animal"></span></div>
+			<div class="space-0"><span class="name"></span> <span class="animal"></span></div>
+			<div class="line-0"><span class="name"></span> <span class="animal"></span></div>
+		</div>
+		<div class="bass staff">
+			<div class="clef"></div>
+			<div class="space-5"><span class="name"></span> <span class="animal"></span></div>
+			<div class="line-5"><span class="name"></span> <span class="animal"></span></div>
+			<div class="space-4"><span class="name"></span> <span class="animal"></span></div>
+			<div class="line-4"><span class="name"></span> <span class="animal"></span></div>
+			<div class="space-3"><span class="name"></span> <span class="animal"></span></div>
+			<div class="line-3"><span class="name"></span> <span class="animal"></span></div>
+			<div class="space-2"><span class="name"></span> <span class="animal"></span></div>
+			<div class="line-2"><span class="name"></span> <span class="animal"></span></div>
+			<div class="space-1"><span class="name"></span> <span class="animal"></span></div>
+			<div class="line-1"><span class="name"></span> <span class="animal"></span></div>
+			<div class="space-0"><span class="name"></span> <span class="animal"></span></div>
+			<div class="line-0"><span class="name"></span> <span class="animal"></span></div>
+		</div>
+	</div>
+	<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+	<script type="text/javascript">
+	$(function() {
+		$('#controls a').click(function(e) {
+			var theClass = $(this).text().toLowerCase();
+			$('#display').toggleClass(theClass);
+			$(this).toggleClass('active');
+		});
+	
+		$(window).resize(function() {
+			$('body').css('font-size', $(window).height()/100+'px');
+		}).resize();
+
+	});
+	</script>
+</body>
+</html>
